@@ -1,0 +1,190 @@
+----------------------------------------1. Explicitly Wait---------------------------------------------------------
+
+public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		//Launch the Chrome  browser
+		WebDriver driver=new ChromeDriver();
+		
+		//Maximize browser screen
+		driver.manage().window().maximize();
+		
+		//Launch the website on the browser
+        driver.get("https://seleniumpractise.blogspot.com/2016/08/how-to-use-explicit-wait-in-selenium.html");
+		
+		//Click on the button
+		driver.findElement(By.xpath("//button[@onclick='timedText()']")).click();
+		
+		//Explicitly wait 
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p[text()='WebDriver']")));
+		
+		if(element.isDisplayed())
+		{
+			System.out.println("Webdriver is found");
+		}
+		else
+		{
+			System.out.println("Webdriver is not found");
+		}
+		
+		driver.close();
+
+	}
+	
+	
+	
+	
+	
+	
+----------------------------------------------2. Web Table----------------------------------------------------------------
+
+public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		
+//		    1. Open URL https://rahulshettyacademy.com/AutomationPractice/
+//			2. Check whether the Pune city available or not in table” Web Table Fixed header” (2nd table)
+//			3. If It is available print it else print “Pune city not available in table”
+		
+		
+		WebDriver driver = new ChromeDriver();
+		
+		//maximize the web page
+		driver.manage().window().maximize();
+		
+		//Open URL https:rahulshettyacademy.com/AutomationPractice/
+		driver.get("https://rahulshettyacademy.com/AutomationPractice/");
+		
+		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(15));
+		
+		
+		 WebElement webTable = driver.findElement(By.xpath("//div[@class='tableFixHead']"));
+
+	        //To Fetch all the table rows 
+	     List<WebElement> rows = webTable.findElements(By.tagName("tr"));
+
+	      
+	     boolean puneFound = false;
+	        
+
+
+	        // Using for loop check for the city "Pune"
+	        for (WebElement row : rows) {
+	            List<WebElement> cells = row.findElements(By.tagName("td"));
+	            for (WebElement cell : cells) {
+	                if (cell.getText().contains("Pune")) {
+	                    puneFound = true;
+	                    break;
+	                }
+	            }
+	            if (puneFound) {
+	                break;
+	            }
+	        }
+
+	        // Print result based on whether Pune is available in the table or not
+	        if (puneFound) {
+	            System.out.println("Pune city is available in the table.");
+	        } else {
+	            System.out.println("Pune city not available in the table.");
+	        }
+
+	        // Close the browser
+	        driver.quit();
+		
+		
+		
+		
+------------------------------------------------------3. Keyboards Event-----------------------------------------------------
+
+public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		//Launch the Chrome Browser
+		WebDriver driver=new ChromeDriver();
+		
+		//Maximize the Browser Screen
+		driver.manage().window().maximize();
+		
+		//Launch the website on Browser
+		driver.get("https://omayo.blogspot.com/");
+		
+		//Clear the screen textarea2
+		driver.findElement(By.xpath("//textarea[normalize-space()='The cat was playing in the garden.']")).clear();
+		
+		//Print the I love football in textarea 1
+		driver.findElement(By.cssSelector("#ta1")).sendKeys("I Love Football");
+		
+		
+		
+		Actions act = new Actions(driver);
+		
+		//Control A
+		act.keyDown(Keys.CONTROL);
+		act.sendKeys("a");
+		act.keyUp(Keys.CONTROL).build().perform();
+		
+		//Control C
+		act.keyDown(Keys.CONTROL);
+		act.sendKeys("c");
+		act.keyUp(Keys.CONTROL).build().perform();
+		
+		
+		//Press Tab
+		act.sendKeys(Keys.TAB).perform();
+		
+		
+		//Control C
+		act.keyDown(Keys.CONTROL);
+		act.sendKeys("v");
+		act.keyUp(Keys.CONTROL).build().perform();
+		
+		
+		String Value1=driver.findElement(By.cssSelector("#ta1")).getAttribute("value");
+		
+		System.out.println(Value1);
+		
+		
+		
+		String Value2=driver.findElement(By.xpath("//textarea[normalize-space()='The cat was playing in the garden.']")).getAttribute("value");
+		
+		System.out.println(Value2);
+		
+		if(Value1.equals(Value2))
+		{
+			System.out.println("text copied");
+		}
+		else
+		{
+			System.out.println("text not copied");
+		}
+		
+		driver.close();
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
